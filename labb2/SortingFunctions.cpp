@@ -6,49 +6,42 @@
 void heapSort(vector<long int>& items)
 {
 	
-	for (unsigned int i = 0; i < items.size(); i++)
+	for (unsigned int i = items.size() / 2 - 1; i >= 0 ; --i)
 	{
-		percolateDown(items, i);
+		percolateDown(items, i, items.size());	//buildheap
+	}
+
+	for (unsigned int j = items.size() - 1; j > 0; --j)
+	{
+		swap(items[0], items[j]);	//deleteMin
+		percolateDown(items, 0, j);	
 	}
 	
 }
 
-void percolateDown(vector<long int>& items, int percolateFrom)	//perkulerar neråt, görs efter det att det översta värdet har tagits bort från priority kön, detta då man popar så flyttas det värdet 
+
+int leftChild(int i)
+{
+	return 2 * i + 1;
+}
+
+void percolateDown(vector<long int>& items, int percolateFrom, int percolateTo)	//perkulerar neråt, görs efter det att det översta värdet har tagits bort från priority kön, detta då man popar så flyttas det värdet 
 {																//som är längst ner i heapen upp till roten(och detta kan vara stort vilket då gör att man dubbelkollar så att de är mindre än dess barn osv osv)
 	int min = percolateFrom;
-	unsigned int l = 2 * percolateFrom + 1; // left child
-	unsigned int r = 2 * percolateFrom + 2; // right child
-
-
-	if (l < items.size() && items[l] < items[min])		// If left child is smaller than root 
-		min = l;
-
-
-	if (r < items.size() && items[r] < items[min])		// If right child is smaller than root/left child
-		min = r;
-
-
-	if (items[min] != items[percolateFrom]) {		// If min is not root 
-		swap(items[percolateFrom], items[min]);
-		
-		int parent = percolateFrom;
-		
-		
-		if (percolateFrom % 2 == 0 && parent != 0) //högerbarn
-		{
-			while (percolateFrom != (2 * parent + 2))
-				parent--;
-			percolateDown(items, parent);
-		}
+	int child;
+	long int temp;
 	
-		else if (percolateFrom % 2 > 0 && parent != 0) //vänsterbarn
-		{
-			while (percolateFrom != (2 * parent + 1))
-				parent--;
-			percolateDown(items, parent);
-		}
-		
+	for (temp = move(items[min]); leftChild(min) < percolateTo; min = child)	//flyttar minstavärdet till en temp, om det finns ett barn till vänster, min blir tilldelat barnet
+	{
+		child = leftChild(min);	// posititionen för det vänstra barnet
+		if (child != percolateTo - 1 && items[child] > items[child + 1])	//om barnet är skillt från sistavärdet OCH om vänsterbarn är mindre än högerbarn:
+				++child;	//barnet som ska percoleras upp kommer att vara högerbarnet
+		if (temp > items[child])	// om barnet är mindre än föräldern så byts plats
+			items[min] = move(items[child]);
+		else
+			break;
 	}
+	items[min] = move(temp); //föräldern byter plats med barnen kontinuerligt så att heapstrukturen(min) uppehålls
 	
 }
 

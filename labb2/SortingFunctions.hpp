@@ -14,7 +14,8 @@ using namespace std;
 
 //heapsort
 void heapSort(vector<long int>& items);
-void percolateDown(vector<long int>& items, int percolateFrom);
+int	leftChild(int i);
+void percolateDown(vector<long int>& items, int percolateFrom, int percolateTo);
 
 
 //QuickSort
