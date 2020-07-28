@@ -13,7 +13,7 @@ void heapSort(vector<long int>& items)
 
 	for (int j = (items.size() - 1); j > 0; --j)
 	{
-		swap(items[0], items[j]);	//deleteMin
+		swap(items[0], items[j]);	//deleteMax
 		percolateDown(items, 0, j);	
 	}
 	
@@ -36,12 +36,12 @@ void percolateDown(vector<long int>& items, int percolateFrom, int percolateTo)	
 		child = leftChild(min);	// posititionen för det vänstra barnet
 		if (child != percolateTo - 1 && items[child] < items[child + 1])	//om barnet är skillt från sistavärdet OCH om vänsterbarn är mindre än högerbarn:
 				++child;	//barnet som ska percoleras upp kommer att vara högerbarnet
-		if (temp < items[child])	// om barnet är mindre än föräldern så byts plats
+		if (temp < items[child])	// om barnet är större än föräldern så byts plats
 			items[min] = move(items[child]);
 		else
 			break;
 	}
-	items[min] = move(temp); //föräldern byter plats med barnen kontinuerligt så att heapstrukturen(min) uppehålls
+	items[min] = move(temp); //föräldern byter plats med barnen kontinuerligt så att heapstrukturen(max) uppehålls
 	
 }
 
