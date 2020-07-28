@@ -6,12 +6,12 @@
 void heapSort(vector<long int>& items)
 {
 	
-	for (unsigned int i = items.size() / 2 - 1; i >= 0 ; --i)
+	for (int i = items.size() / 2 - 1; i >= 0 ; --i)
 	{
 		percolateDown(items, i, items.size());	//buildheap
 	}
 
-	for (unsigned int j = items.size() - 1; j > 0; --j)
+	for (int j = (items.size() - 1); j > 0; --j)
 	{
 		swap(items[0], items[j]);	//deleteMin
 		percolateDown(items, 0, j);	
