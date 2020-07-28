@@ -34,9 +34,9 @@ void percolateDown(vector<long int>& items, int percolateFrom, int percolateTo)	
 	for (temp = move(items[min]); leftChild(min) < percolateTo; min = child)	//flyttar minstavärdet till en temp, om det finns ett barn till vänster, min blir tilldelat barnet
 	{
 		child = leftChild(min);	// posititionen för det vänstra barnet
-		if (child != percolateTo - 1 && items[child] > items[child + 1])	//om barnet är skillt från sistavärdet OCH om vänsterbarn är mindre än högerbarn:
+		if (child != percolateTo - 1 && items[child] < items[child + 1])	//om barnet är skillt från sistavärdet OCH om vänsterbarn är mindre än högerbarn:
 				++child;	//barnet som ska percoleras upp kommer att vara högerbarnet
-		if (temp > items[child])	// om barnet är mindre än föräldern så byts plats
+		if (temp < items[child])	// om barnet är mindre än föräldern så byts plats
 			items[min] = move(items[child]);
 		else
 			break;
